@@ -21,6 +21,8 @@ async def main() -> None:
             print("pgvector: enabled")
         else:
             print("pgvector: missing")
+
+        print(result.scalar())
     await engine.dispose()
 
 

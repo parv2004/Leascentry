@@ -12,7 +12,7 @@ async def main() -> None:
 
     async with engine.connect() as conn:
         result = await conn.execute(text("SELECT version()"))
-
+        print(result.scalar())
         result = await conn.execute(
             text("SELECT EXISTS(SELECT 1 FROM pg_extension WHERE extname = 'vector')")
         )
@@ -22,7 +22,7 @@ async def main() -> None:
         else:
             print("pgvector: missing")
 
-        print(result.scalar())
+        
     await engine.dispose()
 
 

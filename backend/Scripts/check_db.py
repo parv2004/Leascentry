@@ -1,5 +1,6 @@
 import asyncio
 
+# from sqlalchemy.ext.asyncio import AsyncEngine
 from sqlalchemy import text
 from sqlalchemy.ext.asyncio import create_async_engine
 
@@ -22,7 +23,6 @@ async def main() -> None:
         else:
             print("pgvector: missing")
 
-        
     await engine.dispose()
 
 

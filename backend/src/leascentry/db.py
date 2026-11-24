@@ -12,7 +12,7 @@ def make_engine(database_url: str) -> AsyncEngine:
     Returns:
         AsyncEngine: An instance of the asynchronous SQLAlchemy engine.
     """
-    return create_async_engine(database_url, echo=True)
+    return create_async_engine(database_url)
 
 
 async def check_database(engine: AsyncEngine) -> bool:

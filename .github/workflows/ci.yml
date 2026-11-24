@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: backend
+
+    services:
+      postgres:
+        image: pgvector/pgvector:pg16
+        env:
+          POSTGRES_USER: leascentry
+          POSTGRES_PASSWORD: leascentry
+          POSTGRES_DB: leascentry
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U leascentry -d leascentry"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+
+    env:
+      DATABASE_URL: postgresql+asyncpg://leascentry:leascentry@localhost:5432/leascentry_db
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+
+      - name: Install dependencies
+        run: uv sync --locked
+
+      - name: Lint
+        run: uv run ruff check .
+
+      - name: Check formatting
+        run: uv run ruff format --check .
+
+      - name: Enable pgvector
+        env:
+          PGPASSWORD: leascentry
+        run: psql -h localhost -U leascentry -d leascentry_db -c "CREATE EXTENSION IF NOT EXISTS vector;"
+
+      - name: Run tests
+        run: uv run pytest -v

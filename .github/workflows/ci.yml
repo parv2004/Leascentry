@@ -50,7 +50,7 @@ jobs:
       - name: Enable pgvector
         env:
           PGPASSWORD: leascentry
-        run: psql -h localhost -U leascentry -d leascentry-c "CREATE EXTENSION IF NOT EXISTS vector;"
+        run: psql -h localhost -U leascentry -d leascentry -c "CREATE EXTENSION IF NOT EXISTS vector;"
 
       - name: Run tests
         run: uv run pytest -v

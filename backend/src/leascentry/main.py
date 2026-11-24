@@ -38,4 +38,4 @@ async def health_ready(request: Request) -> JSONResponse:
 
     if ready:
         return JSONResponse(content={"status": "ready"})
-    return JSONResponse(content={"status": "not ready"}, status_code=503)
+    return JSONResponse(content={"status": "not_ready"}, status_code=503)

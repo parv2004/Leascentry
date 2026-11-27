@@ -52,5 +52,8 @@ jobs:
           PGPASSWORD: leascentry
         run: psql -h localhost -U leascentry -d leascentry -c "CREATE EXTENSION IF NOT EXISTS vector;"
 
+      - name: Run migrations
+        run: uv run alembic upgrade head
+
       - name: Run tests
         run: uv run pytest -v

@@ -1,10 +1,12 @@
 import asyncio
 import secrets
 
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from leascentry.config import Settings
 from leascentry.db import make_engine
 from leascentry.models import Document
-from sqlalchemy.ext.asyncio import AsyncSession
+
 settings = Settings()
 
 
